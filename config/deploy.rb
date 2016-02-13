@@ -5,10 +5,10 @@ lock '3.4.0'
 set :application, 'test-project'
 
 set :scm, :git
-# SubmoduleStrategy is used for including the WordPress submodule
-set :git_strategy, Capistrano::Git::SubmoduleStrategy
 # set the repo_url to pointing to your Git project
 set :repo_url, 'git@github.com:andreasonny83/new_test.git'
+# SubmoduleStrategy is used for including the WordPress submodule
+set :git_strategy, Capistrano::Git::SubmoduleStrategy
 
 set :format, :pretty
 set :log_level, :info
@@ -18,22 +18,25 @@ set :tmp_dir, '/home/sonny883/tmp'
 # Default value for :pty is false
 set :pty, true
 
+# files we want symlinking to specific entries in shared.
+set :linked_files, %w{config/database.yml config/application.yml}
+
 # Default value for :linked_files is []
 # set :linked_files, fetch(:linked_files, []).push('config/database.yml', 'config/secrets.yml')
 
 # Default value for linked_dirs is []
-# set :linked_dirs, fetch(:linked_dirs, []).push('log', 'tmp/pids', 'tmp/cache', 'tmp/sockets', 'vendor/bundle', 'public/system')
+set :linked_dirs, fetch(:linked_dirs, []).push('log', 'tmp/pids', 'tmp/cache', 'tmp/sockets', 'vendor/bundle', 'public/system')
 
 # Default value for default_env is {}
 # set :default_env, { path: "/opt/ruby/bin:$PATH" }
 
 # Default value for keep_releases is 5
-# set :keep_releases, 5
+set :keep_releases, 5
 
 before :deploy, :check_write_permissions
+after :finishing, 'deploy:cleanup'
 
 namespace :deploy do
-
   after :restart, :clear_cache do
     on roles(:web), in: :groups, limit: 3, wait: 10 do
       # Here we can do anything such as:
@@ -42,5 +45,4 @@ namespace :deploy do
       # end
     end
   end
-
 end
