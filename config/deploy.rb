@@ -2,18 +2,18 @@
 lock '3.4.0'
 
 # replace Wordpress-Capistrano-Boilerplate with your application name
-set :application, 'Wordpress-Capistrano-Boilerplate'
+set :application, 'test-project'
 
 set :scm, :git
-# set the repo_url to pointing to your Git project
-set :repo_url, 'git@github.com:andreasonny83/Wordpress-Capistrano-Boilerplate.git'
 # SubmoduleStrategy is used for including the WordPress submodule
 set :git_strategy, Capistrano::Git::SubmoduleStrategy
+# set the repo_url to pointing to your Git project
+set :repo_url, 'git@github.com:andreasonny83/new_test.git'
 
 set :format, :pretty
 set :log_level, :info
 # The folder on your server that Capistrano will use as a temporary one
-set :tmp_dir, '/home/SSH_USER_NAME/tmp'
+set :tmp_dir, '/home/sonny883/tmp'
 
 # Default value for :pty is false
 set :pty, true
